@@ -1,0 +1,14 @@
+model BarCode {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  code        String @unique
+  productName String
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
