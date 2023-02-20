@@ -1,5 +1,4 @@
 node_modules
-# Keep environment variables out of version control
 .env
 barcode_data
 .DS_Store
