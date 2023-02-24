@@ -2,9 +2,8 @@ const { parentPort, workerData, threadId } = require('worker_threads');
 
 import fs from 'fs';
 import csv from 'csv-parser';
-import { BarCode } from '@prisma/client';
 import { WorkerStatus, MAX_DATA_SIZE, NECESSARY_CATEGORIES } from './constants';
-import { prisma } from '../../prisma';
+import { mongo, BarCode } from '../../prisma/mongo';
 
 // ---
 
@@ -47,18 +46,18 @@ async function saveCsvToDB() {
       data.push({ c: row.UPCEAN, n: row.Name });
       
       if (data.length >= MAX_DATA_SIZE) {
-        await prisma.barCode.createMany({ data });
+        await mongo.barCode.createMany({ data });
         data.length = 0;
       }
     }
 
     if (data.length > 0) {
-      await prisma.barCode.createMany({ data });
+      await mongo.barCode.createMany({ data });
       data.length = 0;
     }
   }
 
-  await prisma.$disconnect();
+  await mongo.$disconnect();
   parentPort.postMessage(WorkerStatus.SUCCESS);
 }
 
