@@ -1,7 +1,7 @@
 model BarCode {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  code        String @unique
-  productName String
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  c  String @unique
+  n  String
 }
 
 generator client {
