@@ -2,3 +2,5 @@ node_modules
 .env
 barcode_data
 .DS_Store
+
+prisma/**/generated/**/*
