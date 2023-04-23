@@ -1,21 +1,12 @@
-import { createClient } from 'redis';
-import { Telegraf } from 'telegraf';
-import { message } from 'telegraf/filters';
-
 require('dotenv').config();
 
-const TELEGRAM_BOT_API = process.env.TELEGRAM_BOT_API;
+import { Telegraf } from 'telegraf';
+import { message } from 'telegraf/filters';
+import { RedisSession, type ContextWithSession } from '../helpers/redis';
 
-const client = createClient({
-    database: 1,
-    
-});
+const { TELEGRAM_BOT_API } = process.env;
 
-
-
-client.on('error', err => console.log('Redis Client Error', err));
-
-// TODO: https://github.com/telegraf/telegraf-session-redis/blob/develop/lib/session.js
+const session = new RedisSession();
 
 async function init() {
     if (!TELEGRAM_BOT_API) {
@@ -23,19 +14,28 @@ async function init() {
         process.exit(-1);
     }
 
-    // await client.connect();
-    console.log('teste');
-    const bot = new Telegraf(TELEGRAM_BOT_API);
-    bot.use();
-    bot.start((ctx) => ctx.reply('Welcome'));
-    bot.launch();
-    // await client.flushAll();
+    // await session.redisClient.flushAll();
 
-    // await client.set('key', 'value');
-    // await client.set('key2', '{"hello": "world"}');
-    // const value = await client.get('key');
+    // await redisClient.connect();
+    console.log('start');
+    const bot = new Telegraf<ContextWithSession>(TELEGRAM_BOT_API);
+    bot.use(session);
+    bot.start((ctx) => {
+        // console.log('/start CTX', ctx);
+        ctx.reply('Welcome')
+        ctx.session.set({key: 'meow'});
+        ctx.session.get();
+        ctx.session.set({value2: 'test'});
+    });
+    bot.launch();
+
+    // await redisClient.flushAll();
+
+    // await redisClient.set('key', 'value');
+    // await redisClient.set('key2', '{"hello": "world"}');
+    // const value = await redisClient.get('key');
     // console.log('value', value);
-    // await client.disconnect();
+    // await redisClient.disconnect();
 }
 
 init();
