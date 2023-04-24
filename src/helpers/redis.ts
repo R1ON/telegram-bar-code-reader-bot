@@ -1,23 +1,12 @@
-require('dotenv').config();
-
 import { createClient } from 'redis';
-import { Context, MiddlewareFn } from 'telegraf';
-
-const { REDIS_HOST, REDIS_PORT } = process.env;
-
-console.log('host port', REDIS_HOST, REDIS_PORT);
+import { configService } from './config-service';
 
 // ---
 
-type SessionValue = Record<string, unknown> | null;
-type InstanceRedisSession = InstanceType<typeof RedisSession>;
+const REDIS_HOST = configService.get('REDIS_HOST');
+const REDIS_PORT = configService.get('REDIS_PORT');
 
-export type ContextWithSession = Context & {
-    session: {
-        get: () => Awaited<ReturnType<InstanceRedisSession['getSession']>>;
-        set: (newValue: SessionValue) => void;
-    };
-};
+export type SessionValue = Record<string, unknown> | null;
 
 // ---
 
@@ -69,27 +58,4 @@ export class RedisSession {
             throw err;
         }
     };
-
-    getSessionKey = (ctx: Context) => {
-        return ctx.from && ctx.chat && `${ctx.from.id}:${ctx.chat.id}`;
-    };
-  
-    middleware (): MiddlewareFn<ContextWithSession> {
-        return async (ctx, next) => {
-            const key = this.getSessionKey(ctx);
-
-            if (!key) {
-              return next();
-            }
-
-            let session = await this.getSession(key) || {};
-
-            ctx.session = {
-                get: function () { return session; },
-                set: function (newValue) { session = Object.assign(session, newValue); }
-            };
-
-            return await next().then(() => this.saveSession(key, session));
-        };
-    }
 }
