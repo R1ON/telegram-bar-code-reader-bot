@@ -1,0 +1,22 @@
+{
+  "name": "@telegram-barcode-reader-bot/web-view",
+  "version": "1.0.0",
+  "description": "web-view",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "keywords": [],
+  "author": "r_mksmv",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "18.0.37",
+    "@types/react-dom": "18.0.11",
+    "@vitejs/plugin-react": "4.0.0",
+    "vite": "4.3.2"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}

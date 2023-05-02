@@ -1,6 +1,5 @@
-import { Telegraf, Markup } from 'telegraf';
+import { Telegraf } from 'telegraf';
 import https from 'https';
-import fs from 'fs';
 import imageSize from 'image-size';
 import { configService } from '../helpers/config-service';
 import { TelegramSession } from './session';
@@ -26,11 +25,18 @@ export class Bot {
     }
 
     init = () => {
-        this._bot.start((ctx) => {
-            ctx.reply('👋 Привет! Пришли штрих-код и я найду твой отзыв');
-        });
+        // this._bot.start((ctx) => {
+        //     ctx.reply('👋 Привет! Пришли штрих-код и я найду твой отзыв');
+        // });
+
+        this._bot.command('start', (ctx) => {
+            const link = `https://bar-code-reader-bot.web.app?user_id=${ctx.from.id}`;
+            const message = `Выполните действие по ссылке: <a href="${link}">ссылка</a>`;
+            ctx.replyWithHTML(message);
+          });
     
         this._bot.on('message', async (ctx) => {
+            console.log('message');
             if ('document' in ctx.update.message) {
                 const document = ctx.update.message.document;
 
@@ -50,6 +56,8 @@ export class Bot {
     
                 return downloadFile(photoInfo.file_id, ctx);
             }
+
+            console.log('message finished');
         });
 
         this._bot.launch();
@@ -59,6 +67,8 @@ export class Bot {
 // TODO: вынести в отдельный файл
 async function downloadFile<T extends ContextWithSession>(fileId: string, ctx: T) {
     const file = await ctx.telegram.getFile(fileId);
+
+    console.log(file);
     
     const url = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${file.file_path}`;
 
@@ -70,7 +80,8 @@ async function downloadFile<T extends ContextWithSession>(fileId: string, ctx: T
         response.on('end', () => {
             const buffer = Buffer.concat(data);
 
-            const { width, height } = imageSize(buffer);
+            const { width, height, ...other } = imageSize(buffer);
+            console.log(other);
 
             if (!width || !height) {
                 console.error('Ширина или высота не найдены');
@@ -79,22 +90,25 @@ async function downloadFile<T extends ContextWithSession>(fileId: string, ctx: T
 
             Quagga.decodeSingle({
                 src: buffer,
-                numOfWorkers: 0,
+                numOfWorkers: 0, // was disabled by library author
                 inputStream: {
+                    type: 'ImageStream',
                     mime: "image/jpeg",
                     size: 800,
+                    constraints: { width, height },
                     area: {
                         top: "10%",
                         right: "5%",
                         left: "5%",
                         bottom: "10%"
-                    }
+                    },
                 },
                 decoder: {
-                    readers: ["ean_reader"] // List of active readers
+                    readers: ["ean_reader"],
                 },
             }, (result) => {
-                if(result.codeResult) {
+                // console.log('result common', result);
+                if(result?.codeResult) {
                     console.log("result", result.codeResult.code);
                 } else {
                     console.log("not detected");

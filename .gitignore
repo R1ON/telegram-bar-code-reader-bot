@@ -1,6 +1,8 @@
 node_modules
-.env
-barcode_data
 .DS_Store
 
-prisma/**/generated/**/*
+apps/**/node_modules
+apps/**/.env
+
+apps/telegram-bot/barcode_data
+apps/telegram-bot/prisma/**/generated/**/*

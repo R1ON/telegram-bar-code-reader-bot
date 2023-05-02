@@ -7,3 +7,8 @@ write about npm i
 ## Seed bar codes
 
 1. `npx prisma db seed`
+
+
+## TODO List
+create build for web-view
+use firebase for hosting
