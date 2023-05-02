@@ -1,22 +1,11 @@
 import { Telegraf, Markup } from 'telegraf';
 import https from 'https';
 import fs from 'fs';
-import path from 'path';
 import imageSize from 'image-size';
 import { configService } from '../helpers/config-service';
 import { TelegramSession } from './session';
 import type { ContextWithSession } from './session/types';
 
-import { MultiFormatReader, BarcodeFormat, BrowserMultiFormatReader, DecodeHintType, RGBLuminanceSource, BinaryBitmap, HybridBinarizer } from '@zxing/library';
-import barcodeReader from 'javascript-barcode-reader';
-// @ts-ignore
-// import Quagga from 'quagga';
-import jpeg from 'jpeg-js';
-
-// @ts-ignore
-import getPixels from 'get-pixels';
-
-// @ts-ignore
 import Quagga from '@ericblade/quagga2';
 
 // ---
@@ -70,17 +59,9 @@ export class Bot {
 // TODO: вынести в отдельный файл
 async function downloadFile<T extends ContextWithSession>(fileId: string, ctx: T) {
     const file = await ctx.telegram.getFile(fileId);
-
-    // console.log(file);
-    // console.log(ctx);
-
-    // return;
     
     const url = `https://api.telegram.org/file/bot${TELEGRAM_BOT_TOKEN}/${file.file_path}`;
 
-    
-
-    // TODO: получив картинку, подрубить парсер, который проанализирует ее и вытащит barcode
     https.get(url, (response) => {
         let data: any[] = [];
         response.on('data', (chunk) => {
@@ -88,20 +69,13 @@ async function downloadFile<T extends ContextWithSession>(fileId: string, ctx: T
         });
         response.on('end', () => {
             const buffer = Buffer.concat(data);
-            const int32Array = new Int32Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / Int32Array.BYTES_PER_ELEMENT);
-            const result = Buffer.concat(data);
-            const decodedImage = jpeg.decode(result);
 
-            console.log(decodedImage);
-
-            const { width, height } = imageSize(result);
+            const { width, height } = imageSize(buffer);
 
             if (!width || !height) {
                 console.error('Ширина или высота не найдены');
                 return;
             }
-
-            // const buff2 = fs.readFileSync(path.resolve(__dirname, ));
 
             Quagga.decodeSingle({
                 src: buffer,
@@ -119,50 +93,13 @@ async function downloadFile<T extends ContextWithSession>(fileId: string, ctx: T
                 decoder: {
                     readers: ["ean_reader"] // List of active readers
                 },
-            }, function(result) {
+            }, (result) => {
                 if(result.codeResult) {
                     console.log("result", result.codeResult.code);
                 } else {
                     console.log("not detected");
                 }
             });
-        
-
-
-            // barcodeReader({
-            //     /* Image file Path || {data: Uint8ClampedArray, width, height} || HTML5 Canvas ImageData */
-            //     image: { width, height, data: new Uint8ClampedArray(result) },
-            //     barcode: 'codabar',
-            //     barcodeType: 'industrial',
-            //     options: {    
-            //       // useAdaptiveThreshold: true // for images with sahded portions
-            //       // singlePass: true
-            //     }
-            //   })
-            //     .then(code => {
-            //       console.log('CODE', code)
-            //     })
-            //     .catch(err => {
-            //       console.log('ERR', err)
-            //     })
-
-            // const hints = new Map();
-            // const formats = [
-            //     BarcodeFormat.CODE_128,
-            //     BarcodeFormat.DATA_MATRIX,
-            //     BarcodeFormat.QR_CODE
-            // ];
-            // hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
-            // hints.set(DecodeHintType.TRY_HARDER, true);
-
-            // const reader = new MultiFormatReader();
-            
-            // const luminanceSource = new RGBLuminanceSource(int32Array, width, height);
-            // const binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
-
-            // const value = reader.decode(binaryBitmap, hints);
-            // console.log(value)
         });
-        // response.pipe(fs.createWriteStream('photo.jpg'));
     });
 }
