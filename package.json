@@ -1,15 +1,21 @@
 {
-    "name": "telegram-barcode-reader-bot",
+    "name": "tg-brb",
+    "description": "Telegram barcode reader bot",
     "version": "1.0.0",
     "private": true,
     "keywords": [],
     "author": "r_mksmv",
     "license": "ISC",
-    "workspaces": [
-        "apps/telegram-bot",
-        "apps/web-view"
-    ],
+    "workspaces": ["apps/*"],
+    "scripts": {
+        "wv:start": "yarn workspace @apps/web-view start",
+        "wv:start-prod": "yarn workspace @apps/web-view start-prod",
+        "wv:build": "yarn workspace @apps/web-view build",
+        "": "--------------",
+        "bot:start": "yarn workspace @apps/telegram-bot start"
+    },
     "dependencies": {
+        "@ericblade/quagga2": "1.8.2",
         "typescript": "5.0.2"
     }
 }

@@ -1,9 +1,9 @@
 {
-  "name": "@telegram-barcode-reader-bot/web-view",
+  "name": "@apps/web-view",
   "version": "1.0.0",
-  "description": "web-view",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
+    "start-prod": "vite preview",
     "build": "tsc && vite build"
   },
   "keywords": [],

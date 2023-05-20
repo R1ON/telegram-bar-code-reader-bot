@@ -1,5 +1,5 @@
 {
-  "name": "@telegram-barcode-reader-bot/telegram-bot",
+  "name": "@apps/telegram-bot",
   "version": "1.0.0",
   "prisma": {
     "seed": "ts-node src/seed"
@@ -21,7 +21,6 @@
     "ts-node-dev": "2.0.0"
   },
   "dependencies": {
-    "@ericblade/quagga2": "^1.8.2",
     "@prisma/client": "4.10.1",
     "csv-parser": "3.0.0",
     "dotenv": "16.0.3",
