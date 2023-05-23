@@ -12,7 +12,7 @@
         "wv:start-prod": "yarn workspace @apps/web-view start-prod",
         "wv:build": "yarn workspace @apps/web-view build",
         "": "--------------",
-        "bot:start": "yarn workspace @apps/telegram-bot start"
+        "bot:dev": "yarn workspace @apps/telegram-bot dev"
     },
     "dependencies": {
         "@ericblade/quagga2": "1.8.2",

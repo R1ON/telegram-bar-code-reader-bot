@@ -29,11 +29,16 @@ export class Bot {
         //     ctx.reply('👋 Привет! Пришли штрих-код и я найду твой отзыв');
         // });
 
-        this._bot.command('start', (ctx) => {
-            const link = `https://bar-code-reader-bot.web.app?user_id=${ctx.from.id}`;
+        this._bot.start((ctx) => {
+            const link = `https://442e-5-76-191-231.ngrok-free.app?user_id=${ctx.from.id}`;
             const message = `Выполните действие по ссылке: <a href="${link}">ссылка</a>`;
             ctx.replyWithHTML(message);
-          });
+        });
+
+        this._bot.command('scanned', (ctx) => {
+            console.log('scanneed', ctx)
+            ctx.reply(`Barcode: ${ctx.update.message.date}`);
+        });
     
         this._bot.on('message', async (ctx) => {
             console.log('message');

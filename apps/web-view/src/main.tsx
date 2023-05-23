@@ -59,11 +59,16 @@ function APP() {
                 console.log('CODE', code.codeResult.code, code);
             }
         });
-    }, [])
+    }, []);
+
+    const copyHandler = () => {
+        navigator.clipboard.writeText('/scanned 12345');
+    };
 
     return (
         <div>
             test
+            <button onClick={copyHandler}>COPY</button>
             <div id="yourElement"></div>
         </div>
     );
