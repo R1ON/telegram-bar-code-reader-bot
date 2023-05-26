@@ -14,13 +14,11 @@
   "keywords": [],
   "author": "r_mksmv",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "@types/glob": "8.0.1",
     "@types/node": "18.13.0",
     "ts-node": "10.9.1",
-    "ts-node-dev": "2.0.0"
-  },
-  "dependencies": {
+    "ts-node-dev": "2.0.0",
     "@prisma/client": "4.10.1",
     "csv-parser": "3.0.0",
     "dotenv": "16.0.3",
