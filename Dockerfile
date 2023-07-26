@@ -9,4 +9,6 @@ RUN yarn global add ts-node-dev
 
 COPY . .
 
-CMD ["yarn", "run", "bot:dev"]
+ENV REDIS_HOST=redis
+
+CMD yarn run bot:dev

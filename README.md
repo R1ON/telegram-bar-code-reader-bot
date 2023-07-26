@@ -1,12 +1,24 @@
-write about npm i
+ ## Development
+#### Start bot:
+1. Download redis server
+2. `redis-server`
+3. `yarn install`
+4. `yarn run bot:dev`
 
-1. `npm run generate`
-2. ...sorry, i'm lazy for this ))
+#### Start web view:
+1. `yarn install`
+2. `yarn run wv:start`
 
+------
 
-## Seed bar codes
+На чем остановился:
 
-1. `npx prisma db seed`
+Основная задача - запустить бота на хостинге
+[x] Докер файл для запуска приложения
+[x] Запускать редис в докере
+[x] Пробросить порт редиса в nodejs приложение 
+[ ] Попробовать запустить бота локально и проверить, что он работает
+[ ] Выгрузить код на хостинг и попробовать запустить бота там
 
 
 ## TODO List
@@ -46,3 +58,13 @@ use firebase for hosting
    рисуем N товаров, вместе с отзывами
 
 // 4. Предлагаем список товаров. Нажимая на товар, переспрашиваем, точно ли его нужно удалить?
+
+-----------
+
+1. `npm run generate`
+2. ...sorry, i'm lazy for this ))
+
+
+## Seed bar codes
+
+1. `npx prisma db seed`

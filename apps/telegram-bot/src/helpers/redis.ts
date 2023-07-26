@@ -6,6 +6,8 @@ import { configService } from './config-service';
 const REDIS_HOST = configService.get('REDIS_HOST');
 const REDIS_PORT = configService.get('REDIS_PORT');
 
+console.log(REDIS_HOST, REDIS_PORT);
+
 export type SessionValue = Record<string, unknown> | null;
 
 // ---
@@ -14,6 +16,9 @@ export class RedisSession {
     readonly redisClient;
 
     constructor () {
+        console.log('НУУУУУУУУУУУУУУУУ', REDIS_HOST, REDIS_PORT);
+        console.log(configService.get('REDIS_HOST'))
+        console.log(process.env.REDIS_HOST);
         this.redisClient = createClient({
             url: `redis://${REDIS_HOST}:${REDIS_PORT}`,
         });

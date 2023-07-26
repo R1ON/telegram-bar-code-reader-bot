@@ -18,13 +18,19 @@ class ConfigService {
     }
 
     get = (key: string) => {
-        const result = this._config[key];
+        const valueFromProcess = process.env[key];
 
-        if (!result) {
+        if (valueFromProcess) {
+            return valueFromProcess;
+        }
+
+        const valueFromEnvFile = this._config[key];
+
+        if (!valueFromEnvFile) {
             throw new Error(`ConfigService -> value by key ${key} not found`);
         }
 
-        return result;
+        return valueFromEnvFile;
     }
 }
 
