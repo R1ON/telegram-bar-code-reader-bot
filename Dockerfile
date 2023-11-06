@@ -2,12 +2,12 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package*.json .
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
 ENV REDIS_HOST=redis
 
-CMD yarn run bot:dev
+CMD npm run bot:dev

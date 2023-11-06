@@ -18,6 +18,7 @@
 [x] Запускать редис в докере
 [x] Пробросить порт редиса в nodejs приложение 
 [x] Попробовать запустить бота локально и проверить, что он работает
+[ ] Почистить Dockerfile от переноса node_modules
 [ ] Перенести ngrok в докер
 [ ] Прокидывать url ngrok'a в приложение (https://stackoverflow.com/questions/71032836/how-to-correctly-configure-ngrok-docker-container-for-node-or-react-app)
 [ ] Выгрузить код на хостинг и попробовать запустить бота там
