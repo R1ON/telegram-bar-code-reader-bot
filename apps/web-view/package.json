@@ -1,5 +1,5 @@
 {
-  "name": "@apps/web-view",
+  "name": "@tg-brb/web-view",
   "version": "1.0.0",
   "scripts": {
     "start": "vite",
@@ -18,5 +18,15 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/R1ON/telegram-bar-code-reader-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/R1ON/telegram-bar-code-reader-bot/issues"
+  },
+  "homepage": "https://github.com/R1ON/telegram-bar-code-reader-bot#readme",
+  "description": ""
 }

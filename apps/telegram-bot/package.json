@@ -1,5 +1,5 @@
 {
-  "name": "@apps/telegram-bot",
+  "name": "@tg-brb/telegram-bot",
   "version": "1.0.0",
   "prisma": {
     "seed": "ts-node src/seed"
@@ -27,5 +27,15 @@
     "prisma": "4.10.1",
     "redis": "4.6.5",
     "telegraf": "4.12.2"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/R1ON/telegram-bar-code-reader-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/R1ON/telegram-bar-code-reader-bot/issues"
+  },
+  "homepage": "https://github.com/R1ON/telegram-bar-code-reader-bot#readme",
+  "description": ""
 }

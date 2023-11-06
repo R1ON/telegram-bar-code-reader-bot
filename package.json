@@ -8,11 +8,11 @@
     "license": "ISC",
     "workspaces": ["apps/*"],
     "scripts": {
-        "wv:start": "yarn workspace @apps/web-view start",
-        "wv:start-prod": "yarn workspace @apps/web-view start-prod",
-        "wv:build": "yarn workspace @apps/web-view build",
+        "wv:start": "npm run start -w @tg-brb/web-view",
+        "wv:start-prod": "npm run start-prod -w @tg-brb/web-view",
+        "wv:build": "npm run build -w @tg-brb/web-view",
         "": "--------------",
-        "bot:dev": "yarn workspace @apps/telegram-bot dev"
+        "bot:dev": "npm run dev -w @tg-brb/telegram-bot"
     },
     "dependencies": {
         "@ericblade/quagga2": "1.8.2",

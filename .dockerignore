@@ -1,0 +1,7 @@
+node_modules
+.DS_Store
+
+apps/**/node_modules
+
+apps/telegram-bot/barcode_data
+apps/telegram-bot/prisma/**/generated/**/*
